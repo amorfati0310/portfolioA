@@ -4,8 +4,9 @@
     <lottoNumberSetting v-on:makeLottoNumber="makeLottoNumber" v-on:saveLottoNumber="saveLottoNumber"></lottoNumberSetting>
     <lottoNumberList :giveLottoNumber="lottoNumbers"></lottoNumberList>
     <lottoNumberSaveList :savedNumbers="savedNumbers" v-on:deleteLottoNumbers="deleteLottoNumbers"
-     v-on:allCLear="allCLear"
+     v-on:allCLear="allCLear" :savedNumbersCount="savedNumbersCount"
     ></lottoNumberSaveList>
+    <gotoBuyLotto></gotoBuyLotto>
     <lottoFooter></lottoFooter>
   </div>
 </template>
@@ -16,6 +17,8 @@ import lottoNumberSetting from './components/lottoNumberSetting.vue'
 import lottoNumberList from './components/lottoNumberList.vue'
 import lottoNumberSaveList from './components/lottoNumberSaveList.vue'
 import lottoFooter from './components/lottoFooter.vue'
+import gotoBuyLotto from './components/goToBuyLotto.vue'
+
 export default {
   name: 'app',
 
@@ -23,7 +26,8 @@ export default {
     return {
       lottoNumbers:[],
       savedNumbers:[],
-      index:0
+      index:0,
+      savedNumbersCount: localStorage.length
 
     }
   },
@@ -32,7 +36,8 @@ export default {
     lottoNumberSetting: lottoNumberSetting,
     lottoNumberList: lottoNumberList,
     lottoNumberSaveList: lottoNumberSaveList,
-    lottoFooter: lottoFooter
+    lottoFooter: lottoFooter,
+    gotoBuyLotto: gotoBuyLotto
   },
   methods: {
     makeLottoNumber() {
@@ -52,8 +57,8 @@ export default {
     saveLottoNumber(){
       // 버튼이 눌리면 savebutton이 나오기 때문에
       // validation 필요가 없음
-        this.index++;
         // var STORAGE_KEY = 'Get Lotto Number version.1'
+        this.index++;
         var lotto_number = this.lottoNumbers;
         var templottoNumbers ={}
         templottoNumbers.numbers = lotto_number;
@@ -61,6 +66,7 @@ export default {
 
         this.savedNumbers.push(templottoNumbers);
         localStorage.setItem(this.index, JSON.stringify(templottoNumbers))
+        this.savedNumbersCount = localStorage.length;
         //로컬스토리지 덮어 쓴다.
 
     },
@@ -74,30 +80,32 @@ export default {
       return items;
       // https://jsperf.com/array-shuffle-comparator/5
     },
-    deleteLottoNumbers(item,index){
-      console.log('하이:',item,index);
+    deleteLottoNumbers(savedlottoNumber,localIndex,appdataIndex){
+      console.log('하이:',savedlottoNumber,localIndex,appdataIndex);
       console.log(this.savedNumbers);
-      this.savedNumbers.splice(index, 1);
-      localStorage.removeItem(index+1);
+      localStorage.removeItem(localIndex);
+      this.savedNumbers.splice(appdataIndex, 1);
+
+      // 3번째 인덱스를 삭제했을 때 index값은 2가 나옴
+      //
+      this.savedNumbersCount = localStorage.length;
     },
     allCLear(){
       this.savedNumbers =[];
       localStorage.clear();
       this.index = 0;
-    }
+    },
   },
-  // watch: {
-  //   lottoNumbers: {
-  //     handler: function (lottoNumber) {
-  //       console.log("changed");
-  //     }
-  //   }
-  // },
     watch: {
      savedNumbers: {
      handler: function (lottoNumber) {
          console.log("changed");
        }
+    },
+    savedNumbersCount:{
+      handler: function(lottoNumber){
+        console.log("갯수를 세줘 ");
+      }
     }
    }
 }
@@ -122,5 +130,6 @@ li
 
 body,h1,ul
   margin: 0
+
 
 </style>

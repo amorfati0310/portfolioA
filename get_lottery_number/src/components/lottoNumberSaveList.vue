@@ -5,31 +5,25 @@
             <li v-for=" (savedlottoNumber,index) in savedNumbers" class="saved-lotto-number">
 
                 <span class="each-number">{{savedlottoNumber.numbers}}</span>
-                <span class="btn-delete-lottonumber-icon" @click="deleteLottoNumbers(savedlottoNumber,index)">
+                <span class="btn-delete-lottonumber-icon" @click="deleteLottoNumbers(savedlottoNumber,savedlottoNumber.index,index)">
                   <i class="fa fa-trash-o" aria-hidden="true"></i>
                 </span>
-                <!--method로 바꾸려는 시도   -->
-                <!-- <span class="each-number">{{displayNumbers(savedlottoNumber.numbers)}}</span> -->
-
-                <!--Computed 적용하려 했으나 잘 안 됨   -->
-                <!-- <span class="eachnumber" >{{ displayNumbers(savedlottoNumber.numbers)}}</span> -->
-                <!-- <span class="each-number" v-text="displayNumbers(savedlottoNumber.numbers)"></span> -->
-
             </li>
         </ul>
+        <span class="saved-numbers-count">Saved Lotto Numbers: {{ savedNumbersCount }}</span>
     </div>
     <div class="clear-savedNumber">
       <button class="btn-clearall-savedNumber" @click="allCLear">All Clear</button>
+
     </div>
 </section>
 </template>
 <script>
 export default {
     name: "",
-    props: ['savedNumbers'],
+    props: ['savedNumbers','savedNumbersCount'],
     data: function data() {
         return {
-
         }
     },
     computed: {
@@ -41,9 +35,9 @@ export default {
        displayNumbers() {
 
       },
-      deleteLottoNumbers(savedlottoNumber,index){
-        this.$emit('deleteLottoNumbers',savedlottoNumber,index);
-        console.log(savedlottoNumber,index);
+      deleteLottoNumbers(savedlottoNumber,localIndex,appdataIndex){
+        this.$emit('deleteLottoNumbers',savedlottoNumber,localIndex,appdataIndex);
+        console.log(savedlottoNumber,localIndex,appdataIndex);
 
       },
       allCLear(){
@@ -63,9 +57,13 @@ export default {
   text-align: center
   line-height: 2.5em
   border-radius: 0.5em
+  margin-top: 1em
 
 .saved-lotto-number-box
   background-color: #ffeaba
+
+
+.saved-number-list
 
 .btn-delete-lottonumber-icon,
   text-align: center
@@ -75,6 +73,10 @@ export default {
   border-radius: 0.3em
   line-height: 2em
   color: #cd2015
+
+.saved-numbers-count
+  color: #f57a16
+  font-weight: bold
 
 .clear-savedNumber
 

@@ -15,8 +15,6 @@
         </span>
       </span>
       </li>
-      <li><span></span></li>
-      <li><span></span></li>
     </ul>
   </nav>
 </template>
