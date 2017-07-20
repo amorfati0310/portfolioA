@@ -34,10 +34,7 @@
       <h2 class="main__title-main">오늘 살아있는 삶을 살아라.</h2>
       <p class="main__title-sub">소중한 <span>당신. </span> 소중한 <span>하루.</span></p>
     </div>
-    <!-- <button class="main__button-edit" type="button" aria-label="edit">
-      <img class="main__contents-button-load-img" src="../images/Pencil.svg" alt="글작성">
-      <span class="main__contents-button-load-text">write</span>
-    </button> -->
+
     <router-link to="/Edit" tag="button" class="main__button-edit" type="button" aria-label="edit">
       <img class="main__contents-button-load-img" src="../images/Pencil.svg" alt="글작성">
       <span class="main__contents-button-load-text">write</span>
@@ -115,11 +112,6 @@
 
     </ul>
 
-
-    <!-- <button class="main__contents-button-load" aria-label="Load more images">
-          <img class="main__contents-button-load-img" src="../images/polaroid.svg" alt="더보기">
-          <span class="main__contents-button-load-text">load more</span>
-    </button> -->
 
   <button @click.prevent="MorePage" class="main__contents-button-load" aria-label="Load more images" type="button">
     <svg width="40px" height="45px" viewBox="0 0 220 243" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
